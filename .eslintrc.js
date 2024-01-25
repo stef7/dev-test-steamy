@@ -4,6 +4,7 @@ const config = {
   rules: {
     "eslint-comments/no-unused-disable": "error",
     "eslint-comments/require-description": "error",
+    "no-process-env": "error",
   },
 };
 
