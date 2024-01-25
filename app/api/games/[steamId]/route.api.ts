@@ -12,6 +12,6 @@ export const getGames = async ({ steamId }: GetGamesPathParams) => {
     gamesMostPlayed: games
       .toSorted((a, b) => b.minutes - a.minutes)
       // .slice(0, 10) // to get first X most played. assuming all for now
-      .map(({ game: { name }, minutes }) => ({ name, hours: minutes / 60 })),
+      .map(({ game: { name, id }, minutes }) => ({ id, name, hours: minutes / 60 })),
   };
 };
