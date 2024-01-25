@@ -7,7 +7,7 @@ export async function GET(
   { params: { steamId } }: { params: { steamId: string } },
 ) {
   const resJson = await fetch(
-    `http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${steamWebApiKey}&steamid=${steamId}&format=json`,
+    `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${steamWebApiKey}&steamid=${steamId}&format=json`,
   ).then((res) => res.json());
 
   return NextResponse.json(resJson);
