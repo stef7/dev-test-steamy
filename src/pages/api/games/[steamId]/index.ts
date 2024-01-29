@@ -1,4 +1,5 @@
 import { getOwnedGamesInfo } from "@/util/steam/api";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export type GetGamesPathParams = { steamId: string };
 
@@ -15,3 +16,11 @@ export const getGames = async ({ steamId }: GetGamesPathParams) => {
       .map(({ game: { name, id }, minutes }) => ({ id, name, hours: minutes / 60 })),
   };
 };
+
+const handler = async (
+  { query }: NextApiRequest & { query: GetGamesPathParams },
+  res: NextApiResponse<GetGamesResponse>,
+) => {
+  res.json(await getGames(query));
+};
+export default handler;

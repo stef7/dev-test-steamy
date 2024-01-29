@@ -1,7 +1,7 @@
 import SteamAPI from "steamapi";
 import type { UserPlaytime, GameInfo } from "steamapi";
 
-import { steamWebApiKey } from "@/util/environment";
+import { steamWebApiKey } from "src/util/environment";
 
 if (!steamWebApiKey) throw new Error("missing steamWebApiKey");
 
