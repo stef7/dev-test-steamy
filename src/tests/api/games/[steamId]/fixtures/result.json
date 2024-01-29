@@ -1,0 +1,16 @@
+{
+  "totalCount": 10,
+  "totalHours": 26.266666666666666,
+  "gamesMostPlayed": [
+    { "id": 255710, "name": "Cities: Skylines", "hours": 11.533333333333333 },
+    { "id": 582270, "name": "Everything", "hours": 9.433333333333334 },
+    { "id": 620, "name": "Portal 2", "hours": 2.15 },
+    { "id": 471550, "name": "Nine Parchments", "hours": 1.45 },
+    { "id": 274190, "name": "Broforce", "hours": 0.7 },
+    { "id": 280790, "name": "Creativerse", "hours": 0.5333333333333333 },
+    { "id": 373420, "name": "Divinity: Original Sin Enhanced Edition", "hours": 0.25 },
+    { "id": 326460, "name": "ShellShock Live", "hours": 0.21666666666666667 },
+    { "id": 217200, "name": "Worms Armageddon", "hours": 0 },
+    { "id": 230230, "name": "Divinity: Original Sin (Classic)", "hours": 0 }
+  ]
+}
