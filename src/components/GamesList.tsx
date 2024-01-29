@@ -1,8 +1,9 @@
 import { ChangeEvent, FormEvent, useState, useCallback, useId } from "react";
-import { useDebounce, useAsync } from "react-use";
+import { useDebounce } from "react-use";
 import useSWR from "swr";
 
 import { GetGamesResponse } from "@/pages/api/games/[steamId]";
+import { defaultFetcher } from "@/util/apis";
 
 export const GamesList: React.FC = () => {
   const htmlId = useId();
@@ -20,7 +21,7 @@ export const GamesList: React.FC = () => {
   );
   useDebounce(onSubmit, 300, [onSubmit]);
 
-  const { data, isLoading, error } = useSWR<GetGamesResponse>(`/api/games/${userId}`);
+  const { data, isLoading, error } = useSWR<GetGamesResponse>(`/api/games/${userId}`, defaultFetcher);
 
   return (
     <section>
@@ -51,7 +52,6 @@ export const GamesList: React.FC = () => {
                     <span>{hours}</span>
                   </li>
                 ))}
-                <li></li>
               </ol>
             </dd>
           </dl>
