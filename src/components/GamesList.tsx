@@ -30,7 +30,7 @@ export const GamesList: React.FC = () => {
     <section>
       <form onSubmit={onSubmit}>
         <label htmlFor={htmlId}>Stream User ID:</label>
-        <input id={htmlId} value={value} onChange={onChange} type="text" />
+        <input id={htmlId} value={value} onChange={onChange} type="tel" required />
         <button type="submit">Submit</button>
       </form>
 
