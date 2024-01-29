@@ -30,7 +30,7 @@ npm test
 
 ## Bonus ideas
 
-- Not requiring the user to input their user ID – https://github.com/HilliamT/nextjs-steam-auth looks good
+- Not requiring the user to input their user ID – https://github.com/Nekonyx/next-auth-steam looks good (and more recently updated than the last one I had here)
 - Comparing recent playtime to all-time – "recentMinutes" is also available against each game in Steam response
 - Even better, chart the breakdown of different games played over time, probably with a stacked filled line chart – this add-on for Chakra UI could be a good match: https://horizon-ui.com/documentation/docs/data-display/charts – the user can choose their own duration e.g. 30d, 365d, all time...
 - Just realised I haven't written any of my own example SCSS due to using Chakra UI, let me know if you'd like me to
