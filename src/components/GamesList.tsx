@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState, useCallback, useId } from "react";
-import { useDebounce } from "react-use";
+import { useDebounce, useLocalStorage } from "react-use";
 import useSWR from "swr";
 
 import { GetGamesResponse } from "@/pages/api/games/[steamId]";
@@ -8,8 +8,11 @@ import { defaultFetcher } from "@/util/apis";
 export const GamesList: React.FC = () => {
   const htmlId = useId();
 
-  const [value, setValue] = useState("");
-  const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => setValue(event.currentTarget.value), []);
+  const [value, setValue] = useLocalStorage("steam-user-id-value", "");
+  const onChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => setValue(event.currentTarget.value),
+    [setValue],
+  );
 
   const [userId, setUserId] = useState(value);
   const onSubmit = useCallback(
