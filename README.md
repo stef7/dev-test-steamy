@@ -1,34 +1,28 @@
-# Next.js + Jest
+# Steam Game Library Analyser
 
-This example shows how to configure Jest to work with Next.js.
+## Local development
 
-This includes Next.js' built-in support for Global CSS, CSS Modules and TypeScript. This example also shows how to use Jest with the App Router and React Server Components.
-
-> **Note:** Since tests can be co-located alongside other files inside the App Router, we have placed those tests in `app/` to demonstrate this behavior (which is different than `pages/`). You can still place all tests in `__tests__` if you prefer.
-
-## Deploy your own
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-jest&project-name=with-jest&repository-name=with-jest)
-
-## How to Use
-
-Quickly get started using [Create Next App](https://github.com/vercel/next.js/tree/canary/packages/create-next-app#readme)!
-
-In your terminal, run the following command:
+Using `nvm`, ensure you are running Node 20:
 
 ```bash
-npx create-next-app --example with-jest with-jest-app
+nvm use
 ```
 
-```bash
-yarn create next-app --example with-jest with-jest-app
-```
+Install dependencies if you haven't already:
 
 ```bash
-pnpm create next-app --example with-jest with-jest-app
+npm install
+```
+
+To run the Next.js app locally for development:
+
+```bash
+npm run dev
 ```
 
 ## Running Tests
+
+To run tests in watch mode during development:
 
 ```bash
 npm test
