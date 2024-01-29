@@ -23,6 +23,8 @@ import {
 /**
  * Steam user ID length is 17 per: https://help.steampowered.com/en/faqs/view/2816-BE67-5B69-0FEC#:~:text=refers%20to%20a%20unique%20identifier,is%20a%2017%20digit%20number
  */
+const USER_ID_REGEX = /^\d{17}$/;
+
 export const GamesList: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -34,18 +36,15 @@ export const GamesList: React.FC = () => {
 
   const [userId, setUserId] = useState("");
   const onSubmit = useCallback(
-    (event?: FormEvent) => {
+    (event?: FormEvent<HTMLFormElement>) => {
       event?.preventDefault(); // if no event, is called by debounced value update
-      setUserId(formRef.current?.checkValidity() ? value : "");
+      setUserId(USER_ID_REGEX.test(value) ? value : "");
     },
     [value],
   );
   useDebounce(onSubmit, 300, [onSubmit]);
 
-  const { data, isLoading, error } = useSWR<GetGamesResponse>(
-    userId.length === 17 && `/api/games/${userId}`,
-    defaultFetcher,
-  );
+  const { data, isLoading, error } = useSWR<GetGamesResponse>(userId && `/api/games/${userId}`, defaultFetcher);
 
   const result = useMemo(() => {
     if (error) return <Text>Error loading data</Text>;
@@ -94,7 +93,7 @@ export const GamesList: React.FC = () => {
       <form onSubmit={onSubmit} ref={formRef}>
         <FormControl>
           <FormLabel>Steam User ID</FormLabel>
-          <Input value={value} onChange={onChange} type="number" pattern="[0-9]{17}" required />
+          <Input value={value} onChange={onChange} type="number" />
         </FormControl>
       </form>
 
