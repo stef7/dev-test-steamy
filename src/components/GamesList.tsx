@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, Fragment, useState, useCallback, useRef } from "react";
+import { ChangeEvent, FormEvent, Fragment, useState, useCallback, useRef, useMemo } from "react";
 import { useDebounce, useLocalStorage } from "react-use";
-import useSWR from "swr";
+import useSWR from "swr/immutable";
 
 import { GetGamesResponse } from "@/pages/api/games/[steamId]";
 import { defaultFetcher } from "@/util/apis";
@@ -42,7 +42,52 @@ export const GamesList: React.FC = () => {
   );
   useDebounce(onSubmit, 300, [onSubmit]);
 
-  const { data, isLoading, error } = useSWR<GetGamesResponse>(userId && `/api/games/${userId}`, defaultFetcher);
+  const { data, isLoading, error } = useSWR<GetGamesResponse>(
+    userId.length === 17 && `/api/games/${userId}`,
+    defaultFetcher,
+  );
+
+  const result = useMemo(() => {
+    if (error) return <Text>Error loading data</Text>;
+    if (isLoading) return <Spinner size="lg" />;
+    if (!data) return;
+    return (
+      <>
+        <StatGroup>
+          <Stat>
+            <StatLabel>Games played</StatLabel>
+            <StatNumber>{data.totalCount}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>Hours played</StatLabel>
+            <StatNumber>{data.totalHours.toFixed(1)}</StatNumber>
+          </Stat>
+        </StatGroup>
+
+        <Stat>
+          <StatLabel marginBottom={2}>Most played games</StatLabel>
+          <Grid gap={5} autoColumns="fit-content(2rem) auto auto">
+            {data.gamesMostPlayed.map(({ id, name, hours }, index) => (
+              <Fragment key={id}>
+                <GridItem colStart={1} rowSpan={2} justifySelf="end">
+                  <Text fontSize="2xl" lineHeight={1.2}>
+                    {index + 1}
+                  </Text>
+                </GridItem>
+                <GridItem colStart={2}>{name} </GridItem>
+                <GridItem justifySelf="end" colStart={3}>
+                  {hours.toFixed(1)}
+                </GridItem>
+                <GridItem colStart={2} colSpan={2} marginTop={-3}>
+                  <Progress value={(hours / Math.max(data.gamesMostPlayed[0].hours, 1)) * 100} />
+                </GridItem>
+              </Fragment>
+            ))}
+          </Grid>
+        </Stat>
+      </>
+    );
+  }, [error, data, isLoading]);
 
   return (
     <Stack spacing={6}>
@@ -53,48 +98,7 @@ export const GamesList: React.FC = () => {
         </FormControl>
       </form>
 
-      {isLoading ? (
-        <Spinner size="lg" />
-      ) : error ? (
-        <Text>Error loading data</Text>
-      ) : (
-        data && (
-          <>
-            <StatGroup>
-              <Stat>
-                <StatLabel>Games played</StatLabel>
-                <StatNumber>{data.totalCount}</StatNumber>
-              </Stat>
-              <Stat>
-                <StatLabel>Hours played</StatLabel>
-                <StatNumber>{data.totalHours.toFixed(1)}</StatNumber>
-              </Stat>
-            </StatGroup>
-
-            <Stat>
-              <StatLabel marginBottom={2}>Most played games</StatLabel>
-              <Grid gap={5} autoColumns="fit-content(2rem) auto auto">
-                {data.gamesMostPlayed.map(({ id, name, hours }, index) => (
-                  <Fragment key={id}>
-                    <GridItem colStart={1} rowSpan={2} justifySelf="end">
-                      <Text fontSize="2xl" lineHeight={1.2}>
-                        {index + 1}
-                      </Text>
-                    </GridItem>
-                    <GridItem colStart={2}>{name} </GridItem>
-                    <GridItem justifySelf="end" colStart={3}>
-                      {hours.toFixed(1)}
-                    </GridItem>
-                    <GridItem colStart={2} colSpan={2} marginTop={-3}>
-                      <Progress value={(hours / Math.max(data.gamesMostPlayed[0].hours, 1)) * 100} />
-                    </GridItem>
-                  </Fragment>
-                ))}
-              </Grid>
-            </Stat>
-          </>
-        )
-      )}
+      {result}
     </Stack>
   );
 };
