@@ -48,7 +48,7 @@ export const GamesList: React.FC = () => {
     <Stack spacing={6}>
       <form onSubmit={onSubmit} ref={formRef}>
         <FormControl>
-          <FormLabel>Stream User ID</FormLabel>
+          <FormLabel>Steam User ID</FormLabel>
           <Input value={value} onChange={onChange} type="number" pattern="[0-9]{17}" required />
         </FormControl>
       </form>
