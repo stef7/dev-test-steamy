@@ -21,7 +21,10 @@ export const GamesList: React.FC = () => {
   );
   useDebounce(onSubmit, 300, [onSubmit]);
 
-  const { data, isLoading, error } = useSWR<GetGamesResponse>(`/api/games/${userId}`, defaultFetcher);
+  const { data, isLoading, error } = useSWR<GetGamesResponse>(
+    userId.length > 12 && `/api/games/${userId}`,
+    defaultFetcher,
+  );
 
   return (
     <section>
