@@ -1,9 +1,11 @@
+import { Heading } from "@chakra-ui/react";
+
 import { GamesList } from "@/components/GamesList";
 
 const HomePage = () => {
   return (
     <>
-      <h1>My Games</h1>
+      <Heading>My Games</Heading>
       <GamesList />
     </>
   );
